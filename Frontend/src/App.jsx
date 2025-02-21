@@ -1,13 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router'
+import ChatBotButton from "./components/ChatBotButton"
 
 export default function App() {
   return (
     <div>
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
       <Outlet/>
+      <ChatBotButton/>
     </div>
   )
 }

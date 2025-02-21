@@ -55,19 +55,6 @@ def train_liver_model():
     with open('models/liver_model.pkl', 'wb') as file:
         pickle.dump(model, file)
 
-# Function to train a model for the Cancer dataset
-def train_cancer_model():
-    data = pd.read_csv('datasets/cancer.csv')
-    X = data.drop(columns=['diagnosis'])
-    y = data['diagnosis'].map({'M': 1, 'B': 0})  # Encode 'M' as 1 and 'B' as 0
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
-    accuracy = accuracy_score(y_test, model.predict(X_test))
-    print(f"Cancer Model Accuracy: {accuracy:.2f}")
-    with open('models/cancer_model.pkl', 'wb') as file:
-        pickle.dump(model, file)
-
 # Function to train a model for the General dataset
 def train_general_model():
     # Load the dataset
@@ -110,7 +97,7 @@ def train_qa_model():
     data = pd.read_csv('datasets/qa.csv')  # Ensure your dataset is saved as "data.csv"
     data = data.fillna("")  # Replace NaN values with empty strings
 
-#     Extract questions and answers
+     # Extract questions and answers
     questions = data['question'].values
     answers = data['answer'].values
 
@@ -141,3 +128,55 @@ if __name__ == '__main__':
     train_qa_model()
     print("QA model completed...\n")
     print("\nTraining completed. Models saved in 'models/' directory.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                  # Function to train a model for the Cancer dataset
+# def train_cancer_model():
+#     data = pd.read_csv('datasets/cancer.csv')
+#     X = data.drop(columns=['diagnosis'])
+#     y = data['diagnosis'].map({'M': 1, 'B': 0})  # Encode 'M' as 1 and 'B' as 0
+#     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#     model = RandomForestClassifier(random_state=42)
+#     model.fit(X_train, y_train)
+#     accuracy = accuracy_score(y_test, model.predict(X_test))
+#     print(f"Cancer Model Accuracy: {accuracy:.2f}")
+#     with open('models/cancer_model.pkl', 'wb') as file:
+#         pickle.dump(model, file)

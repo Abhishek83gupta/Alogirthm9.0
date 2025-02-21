@@ -4,33 +4,18 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Prediction from "./components/prediction/prediction"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // children: [
-      // {
-      //   path: "/",
-      //   element:
-      // },
-      // {
-      //   path: "/login",
-      //   element: 
-      // },
-      // {
-      //   path: "/Signup",
-      //   element: 
-      // },
-      // {
-      //   path: "/seller/profile",
-      //   element: 
-      // },
-      // {
-      //   path: "/buyer/profile",
-      //   element: 
-      // },
-    // ],
+    children: [
+      {
+        path: "/prediction",
+        element: <Prediction/>
+      },
+    ],
   },
 ]);
 

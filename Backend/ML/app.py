@@ -3,8 +3,10 @@ import pickle
 import numpy as np
 import joblib
 from sklearn.metrics.pairwise import cosine_similarity
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Allow all origins (for development)
 
 # Load pre-trained models
 diabetes_model = pickle.load(open("./models/diabetes_model.pkl", "rb"))
@@ -72,15 +74,14 @@ def predict_general():
     data = request.get_json()
 
     # Extract features
-    fever = 1 if data['Fever'] == 'Yes' else 0
-    cough = 1 if data['Cough'] == 'Yes' else 0
-    fatigue = 1 if data['Fatigue'] == 'Yes' else 0
-    difficulty_breathing = 1 if data['Difficulty Breathing'] == 'Yes' else 0
-    age = int(data['Age'])
-    gender = 1 if data['Gender'] == 'Male' else 0
-    blood_pressure = {'Low': 1, 'Normal': 2, 'High': 3}[data['Blood Pressure']]
-    cholesterol = {'Low': 1, 'Normal': 2, 'High': 3}[data['Cholesterol Level']]
-
+    fever = 1 if data['fever'] == 'Yes' else 0
+    cough = 1 if data['cough'] == 'Yes' else 0
+    fatigue = 1 if data['fatigue'] == 'Yes' else 0
+    difficulty_breathing = 1 if data['difficultyBreathing'] == 'Yes' else 0
+    age = int(data['age'])
+    gender = 1 if data['gender'] == 'Male' else 0
+    blood_pressure = {'Low': 1, 'Normal': 2, 'High': 3}.get(data['bloodPressure'], 2)  # Default 'Normal'
+    cholesterol = {'Low': 1, 'Normal': 2, 'High': 3}.get(data['cholesterolLevel'], 2)
     # Predict
     features = np.array([[fever, cough, fatigue, difficulty_breathing, age, gender, blood_pressure, cholesterol]])
     prediction = general_model.predict(features)
