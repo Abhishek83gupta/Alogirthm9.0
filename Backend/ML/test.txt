@@ -1,0 +1,69 @@
+// Liver
+{
+  "age": 65,
+  "gender": "Female",
+  "tot_bilirubin": 0.7,
+  "direct_bilirubin": 0.1,
+  "tot_proteins": 187,
+  "albumin": 16,
+  "ag_ratio": 18,
+  "sgpt": 6.8,
+  "sgot": 3.3,
+  "alkphos": 0.9
+}
+
+// Heart 
+{
+  "age": 43,
+  "sex": 1,
+  "cp": 3,
+  "trestbps": 52,
+  "chol": 233,
+  "fbs": 1,
+  "restecg": 0,
+  "thalach": 130,
+  "exang": 0,
+  "oldpeak": 2.3,
+  "slope": 0,
+  "ca": 0,
+  "thal": 1
+}
+
+// Diabetes 
+{
+  "Pregnancies": 6,
+  "Glucose": 148,
+  "BloodPressure": 72,
+  "SkinThickness": 35,
+  "Insulin": 0,
+  "BMI": 33.6,
+  "DiabetesPedigreeFunction": 0.627,
+  "Age": 50
+}
+
+
+// Cancer
+{
+  "radius_mean": 17.99,
+  "texture_mean": 10.38,
+  "perimeter_mean": 122.8,
+  "area_mean": 1001,
+  "smoothness_mean": 0.1184,
+  "compactness_mean": 0.2776,
+  "concavity_mean": 0.3001,
+  "concavepoints_mean": 0.1471,
+  "symmetry_mean": 0.2419,
+  "fractaldimension_mean": 0.07871
+}
+
+// general
+{
+    "Fever": "Yes",
+    "Cough": "No",
+    "Fatigue": "Yes",
+    "Difficulty Breathing": "Yes",
+    "Age": 25,
+    "Gender": "Female",
+    "Blood Pressure": "Normal",
+    "Cholesterol Level": "Normal"
+}
