@@ -121,7 +121,7 @@ if __name__ == '__main__':
     print("Heart model completed...\n")
     train_liver_model()
     print("Liver model completed...\n")
-    train_cancer_model()
+    # train_cancer_model()
     print("Cancer model completed...\n")
     train_general_model()
     print("General model completed...\n")

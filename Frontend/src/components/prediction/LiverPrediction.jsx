@@ -11,7 +11,7 @@ function LiverPrediction() {
     ag_ratio: "",
     sgpt: "",
     sgot: "",
-    alkphos: ""
+    alkphos: "",
   });
 
   const [result, setResult] = useState(null);
@@ -30,6 +30,12 @@ function LiverPrediction() {
 
     try {
       const response = await fetch("http://127.0.0.1:5000/predict/liver", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const nodeRequest = fetch("http://localhost:3000/api/liver", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -1,156 +1,3 @@
-// // components/DiabetesPrediction.js
-// import React, { useState } from 'react';
-
-// function DiabetesPrediction() {
-//   const [formData, setFormData] = useState({
-//     pregnancies: '',
-//     glucose: '',
-//     bloodPressure: '',
-//     skinThickness: '',
-//     insulin: '',
-//     bmi: '',
-//     diabetesPedigreeFunction: '',
-//     age: ''
-//   });
-
-//   const [result, setResult] = useState(null);
-
-//   const InputField = ({ label, name, value, onChange, placeholder }) => (
-//     <div className="flex flex-col space-y-2">
-//       <label className="text-gray-300 text-sm">{label}</label>
-//       <input
-//         type="number"
-//         value={value}
-//         onChange={(e) => onChange(name, e.target.value)}
-//         placeholder={placeholder}
-//         className="bg-gray-700 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-//       />
-//     </div>
-//   );
-
-//   const handleInputChange = (name, value) => {
-//     setFormData(prev => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     setResult("Diabetes prediction result here");
-//   };
-
-//   return (
-//     <div className="max-w-4xl mx-auto text-white">
-//       <h2 className="text-2xl font-bold mb-8">
-//         Diabetes Prediction Using Machine Learning
-//       </h2>
-
-//       <form onSubmit={handleSubmit} className="space-y-6">
-//         <div className="grid grid-cols-2 gap-6">
-//           <InputField
-//             label="Pregnancies"
-//             name="pregnancies"
-//             value={formData.pregnancies}
-//             onChange={handleInputChange}
-//             placeholder="6"
-//           />
-//           <InputField
-//             label="Glucose"
-//             name="glucose"
-//             value={formData.glucose}
-//             onChange={handleInputChange}
-//             placeholder="148"
-//           />
-//           <InputField
-//             label="Blood Pressure"
-//             name="bloodPressure"
-//             value={formData.bloodPressure}
-//             onChange={handleInputChange}
-//             placeholder="72"
-//           />
-//           <InputField
-//             label="Skin Thickness"
-//             name="skinThickness"
-//             value={formData.skinThickness}
-//             onChange={handleInputChange}
-//             placeholder="35"
-//           />
-//           <InputField
-//             label="Insulin"
-//             name="insulin"
-//             value={formData.insulin}
-//             onChange={handleInputChange}
-//             placeholder="0"
-//           />
-//           <InputField
-//             label="BMI"
-//             name="bmi"
-//             value={formData.bmi}
-//             onChange={handleInputChange}
-//             placeholder="33.6"
-//           />
-//           <InputField
-//             label="Diabetes Pedigree Function"
-//             name="diabetesPedigreeFunction"
-//             value={formData.diabetesPedigreeFunction}
-//             onChange={handleInputChange}
-//             placeholder="0.627"
-//           />
-//           <InputField
-//             label="Age"
-//             name="age"
-//             value={formData.age}
-//             onChange={handleInputChange}
-//             placeholder="50"
-//           />
-//         </div>
-
-//         <button
-//           type="submit"
-//           className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
-//         >
-//           Predict Diabetes
-//         </button>
-//       </form>
-
-//       {result && (
-//         <div className="mt-8 bg-gray-800 p-6 rounded-lg space-y-4">
-//           <p className="text-lg font-semibold text-blue-500">{result}</p>
-          
-//           <div className="space-y-4">
-//             <div>
-//               <h3 className="text-xl font-semibold mb-2">Diabetes Overview:</h3>
-//               <p className="text-gray-300">
-//                 Diabetes is a chronic disease that occurs when the body cannot effectively use insulin or doesn't produce enough insulin...
-//               </p>
-//             </div>
-
-//             <div>
-//               <h3 className="text-xl font-semibold mb-2">Management and Prevention:</h3>
-//               <ul className="list-disc list-inside text-gray-300 space-y-2">
-//                 <li>Maintain a Healthy Diet</li>
-//                 <li>Regular Exercise</li>
-//                 <li>Monitor Blood Sugar Levels</li>
-//                 <li>Regular Medical Check-ups</li>
-//                 <li>Medication Compliance</li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default DiabetesPrediction;
-
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 
 function DiabetesPrediction() {
@@ -183,6 +30,12 @@ function DiabetesPrediction() {
 
     try {
       const response = await fetch("http://127.0.0.1:5000/predict/diabetes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const nodeRequest = fetch("http://localhost:3000/api/diabetes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -336,7 +189,7 @@ function DiabetesPrediction() {
       {/* Display Prediction Result */}
       {result && !error && (
         <div className="mt-8 bg-gray-800 p-6 rounded-lg space-y-4">
-          <p className="text-lg font-semibold text-blue-500">Prediction: {result}</p>
+          <p className="text-lg font-semibold text-blue-500">{result}</p>
         </div>
       )}
     </div>

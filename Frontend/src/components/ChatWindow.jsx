@@ -7,7 +7,7 @@ const ChatWindow = ({ onClose }) => {
   const [newMessage, setNewMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
-  const welcomeMessageAdded = useRef(false); // Prevent duplicate welcome message
+  const welcomeMessageAdded = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -37,21 +37,29 @@ const ChatWindow = ({ onClose }) => {
     setIsTyping(true);
 
     try {
-      const userId = "tPAS3CycNiaMHk8DB6YvsBuClSA3";
-      const response = await fetch(
-        `https://1b1b-34-70-22-243.ngrok-free.app?$tag=${newMessage}&id=${userId}`,
-        {
-          method: "GET",
-          headers: new Headers({
-            "ngrok-skip-browser-warning": "69420",
-          }),
-        }
-      );
+      const userId = "tPAS3CycNiaMHk8DB6YvsBuClSA3"; // Keep this if required
+      const response = await fetch("http://127.0.0.1:5000/predict/qa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          question: newMessage,
+        }),
+      });
 
       if (response.ok) {
         const responseData = await response.json();
         setIsTyping(false);
-        receiveMessage(responseData.message);
+
+        // Check if the response is just a list of questions or unrelated content
+        if (isIrrelevantResponse(responseData.answer)) {
+          receiveMessage("I am a healthcare chatbot. Please ask questions related to healthcare.");
+        } else {
+          receiveMessage(responseData.answer);
+        }
       } else {
         setIsTyping(false);
         receiveMessage("Sorry, I'm having trouble connecting. Please try again.");
@@ -68,6 +76,27 @@ const ChatWindow = ({ onClose }) => {
 
   const receiveMessage = (message) => {
     setMessages((prevMessages) => [...prevMessages, { text: message, type: "bot" }]);
+  };
+
+  // Function to detect irrelevant responses
+  const isIrrelevantResponse = (response) => {
+    const irrelevantKeywords = [
+      "General Information",
+      "Recommendations and Guidelines",
+      "What is", "How can", "Are certain people",
+      "spread", "prevention", "treatment", "infection", "patients",
+      "top of page", "more images", "search", "library"
+    ];
+
+    // Convert response to lowercase and check if it contains multiple irrelevant keywords
+    const responseLower = response.toLowerCase();
+    let count = 0;
+    
+    irrelevantKeywords.forEach((keyword) => {
+      if (responseLower.includes(keyword.toLowerCase())) count++;
+    });
+
+    return count > 3; // If more than 3 irrelevant keywords are found, reject the response
   };
 
   return (
