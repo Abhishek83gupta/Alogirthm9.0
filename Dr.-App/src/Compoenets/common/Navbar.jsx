@@ -1,178 +1,149 @@
 import React, { useState } from "react";
-import logo from "../../assets/assets_frontend/logo.svg";
-import profile_pic from "../../assets/assets_frontend/profile_pic.png";
-import dropdown from "../../assets/assets_frontend/dropdown_icon.svg";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { Appcontext } from "../../Context/Context";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { token, settoken } = useContext(Appcontext);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-
-  const logout = () => {
-    settoken("");
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
 
   return (
-    <>
-      <div className="flex flex-row justify-between items-center p-4 m-4 border-b-2 border-gray-700 shadow-lg bg-[#1e293b]">
-        {/* Logo */}
-        <img
-          onClick={() => navigate("/")}
-          src={logo}
-          alt="logo"
-          className="w-28 cursor-pointer"
-        />
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex">
-          <ul className="flex flex-row items-center justify-between p-3 m-2 gap-6 lg:gap-14">
-            {["/", "/prediction", "/Doctor", "/about", "/contact"].map((path, index) => (
-              <NavLink
-                key={index}
-                to={path}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#3b82f6]"
-                    : "text-gray-300 hover:text-[#3b82f6]"
-                }
-              >
-                <li className="text-lg lg:text-xl font-semibold select-none transition-colors duration-300">
-                  {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
-                </li>
-              </NavLink>
-            ))}
-          </ul>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="focus:outline-none"
-          >
-            <svg
-              className="w-8 h-8 text-gray-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Profile Menu */}
-        {token ? (
-          <div className="relative hidden md:block">
-            <div
-              className="flex flex-row gap-2 cursor-pointer"
-              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-            >
-              <img
-                src={profile_pic}
-                className="rounded-full w-12 lg:w-14"
-                alt="profile"
-              />
-              <img src={dropdown} className="w-6 lg:w-7" alt="dropdown icon" />
-            </div>
-
-            {/* Profile Dropdown */}
-            {profileMenuOpen && (
-              <div className="absolute z-20 right-0 w-48 lg:w-56 bg-[#2d3748] p-4 rounded-lg border border-gray-700">
-                <p
-                  onClick={() => navigate("/Myprofile")}
-                  className="hover:text-[#3b82f6] cursor-pointer text-lg lg:text-xl text-gray-300 select-none transition-colors duration-300"
-                >
-                  My Profile
-                </p>
-                <p
-                  onClick={() => navigate("/My_Appoiment")}
-                  className="hover:text-[#3b82f6] cursor-pointer text-lg lg:text-xl text-gray-300 select-none transition-colors duration-300"
-                >
-                  My Appointments
-                </p>
-                <p
-                  onClick={logout}
-                  className="hover:text-[#3b82f6] cursor-pointer text-lg lg:text-xl text-gray-300 select-none transition-colors duration-300"
-                >
-                  Logout
-                </p>
-              </div>
-            )}
+    <nav className="bg-[#1a2332] border-b border-gray-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Left side - Logo/Project Name */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-2xl font-bold text-white">
+              Prescripto
+            </Link>
           </div>
-        ) : (
-          <button
-            className="bg-[#3b82f6] text-lg lg:text-xl p-2 lg:p-3 text-white rounded-full select-none hidden md:block hover:bg-[#1e3a8a] transition-colors duration-300"
+
+          {/* Middle - Navigation Links */}
+          <div className="hidden md:block">
+            <div className="flex items-center space-x-8">
+              <Link
+                to="/"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                Home
+              </Link>
+              <Link
+                to="/prediction"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                Prediction
+              </Link>
+              <Link
+                to="/appointment"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                Appointment
+              </Link>
+              <Link
+                to="/medicine"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                Medicine
+              </Link>
+              <Link
+                to="/mri"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                MRI
+              </Link>
+              <Link
+                to="/news"
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                News
+              </Link>
+            </div>
+          </div>
+
+          {/* Right side - Create Account Button */}
+          <div className="hidden md:block">
+            <button 
+            className="bg-[#3b82f6] hover:bg-[#1e3a8a] text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-500"
             onClick={() => navigate("/login")}
-          >
-            Create account
-          </button>
-        )}
+            >
+              Create Account
+            </button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+            >
+              <svg
+                className="h-6 w-6"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={
+                    isMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16M4 18h16"
+                  }
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
-      {menuOpen && (
-        <div className="md:hidden flex flex-col bg-[#1e293b] shadow-lg px-4 py-4 space-y-4">
-          {["/", "/Doctor", "/about", "/contact", "/prediction"].map((path, index) => (
-            <NavLink
-              key={index}
-              to={path}
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive ? "text-[#3b82f6]" : "text-gray-300"
-              }
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            <Link
+              to="/"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              <li className="text-lg font-semibold">
-                {path === "/" ? "HOME" : path.replace("/", "").toUpperCase()}
-              </li>
-            </NavLink>
-          ))}
-
-          {/* Conditional Login/Logout in Mobile View */}
-          {token ? (
-            <div className="flex flex-col gap-4 bg-[#2d3748] p-4 rounded-lg border border-gray-700">
-              <p
-                onClick={() => navigate("/Myprofile")}
-                className="hover:text-[#3b82f6] cursor-pointer text-lg text-gray-300 transition-colors duration-300"
-              >
-                My Profile
-              </p>
-              <p
-                onClick={() => navigate("/My_Appoiment")}
-                className="hover:text-[#3b82f6] cursor-pointer text-lg text-gray-300 transition-colors duration-300"
-              >
-                My Appointments
-              </p>
-              <p
-                onClick={logout}
-                className="hover:text-[#3b82f6] cursor-pointer text-lg text-gray-300 transition-colors duration-300"
-              >
-                Logout
-              </p>
-            </div>
-          ) : (
-            <button
-              className="bg-[#3b82f6] text-lg p-2 text-white rounded-full hover:bg-[#1e3a8a] transition-colors duration-300"
-              onClick={() => navigate("/login")}
+              Home
+            </Link>
+            <Link
+              to="/prediction"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              Create account
+              Prediction
+            </Link>
+            <Link
+              to="/appointment"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              Appointment
+            </Link>
+            <Link
+              to="/medicine"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              Medicine
+            </Link>
+            <Link
+              to="/mri"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              MRI
+            </Link>
+            <Link
+              to="/news"
+              className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              News
+            </Link>
+            <button className="w-full bg-[#3b82f6] hover:bg-[#1e3a8a] text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-500">
+              Create Account
             </button>
-          )}
+          </div>
         </div>
       )}
-    </>
+    </nav>
   );
 }
 

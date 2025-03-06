@@ -1,8 +1,8 @@
 import React from 'react'
-import Hedaer from '../Compoenets/Home/Hedaer'
-import Specelist from '../Compoenets/Home/Specelist'
-import Topdoctor from '../Compoenets/Home/Topdoctor'
-import Banner from '../Compoenets/Home/Banner'
+import Hedaer from '../Compoenets/DoctorAppoinment/Hedaer'
+import Specelist from '../Compoenets/DoctorAppoinment/Specelist'
+import Topdoctor from '../Compoenets/DoctorAppoinment/Topdoctor'
+import Banner from '../Compoenets/DoctorAppoinment/Banner'
 
 function Home() {
     return (

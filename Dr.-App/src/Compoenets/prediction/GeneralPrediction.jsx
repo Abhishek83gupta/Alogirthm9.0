@@ -37,74 +37,86 @@ function GeneralPrediction() {
   }, [result]);
 
   const formatDiseaseInfo = (text) => {
-    const cleanedText = text
-      .replace(/\*/g, "")
-      .replace(/## /g, "")
-      .split(/\n{2,}/g)
-      .filter(section => section.trim());
+    // Extract sections for each heading
+    const sections = {
+      "Causes": extractSection(text, "Causes"),
+      "Symptoms": extractSection(text, "Symptoms"),
+      "Diagnosis": extractSection(text, "Diagnosis"),
+      "Treatment Options": extractSection(text, "Treatment Options"),
+      "Preventive Measures": extractSection(text, "Preventive Measures"),
+      "Risk Factors": extractSection(text, "Risk Factors"),
+      "Additional Details": extractSection(text, "Additional Details")
+    };
 
-    const formattedSections = [];
-    let currentSection = null;
-
-    cleanedText.forEach((section) => {
-      const parts = section.split(':');
-      if (parts.length >= 2) {
-        const heading = parts[0].trim();
-        const content = parts.slice(1).join(':').trim();
-        
-        currentSection = {
-          heading,
-          content: content.split('\n').map(line => line.trim()).filter(Boolean)
-        };
-        formattedSections.push(currentSection);
-      } else if (currentSection) {
-        currentSection.content.push(...section.split('\n').map(line => line.trim()).filter(Boolean));
-      }
-    });
-
-    return formattedSections.map((section, index) => (
-      <motion.div
-        key={index}
-        className="mb-6 bg-gray-800 rounded-lg overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.2 }}
-      >
-        <motion.div
-          className="bg-blue-600 p-4"
-          initial={{ x: -100 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.2 }}
-        >
-          <h3 className="text-xl font-bold text-white">
-            {section.heading}
-          </h3>
-        </motion.div>
-        <motion.div
-          className="p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: (index * 0.2) + 0.2 }}
-        >
-          {section.content.map((paragraph, pIndex) => (
-            <p 
-              key={pIndex} 
-              className={`text-white mb-2 ${paragraph.trim().startsWith('-') ? 'pl-4' : ''}`}
+    return (
+      <div className="grid-container">
+        {Object.entries(sections).map(([heading, content], index) => (
+          <motion.div
+            key={heading}
+            className="grid-item bg-gray-800 rounded-lg overflow-hidden"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <motion.div
+              className="bg-blue-600 p-4"
+              initial={{ x: -50 }}
+              animate={{ x: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              {paragraph.trim().startsWith('-') ? 
-                paragraph.substring(1).trim() : 
-                paragraph}
-            </p>
-          ))}
-        </motion.div>
-      </motion.div>
-    ));
+              <h3 className="text-xl font-bold text-white">
+                {heading}
+              </h3>
+            </motion.div>
+            <motion.div
+              className="p-4 content-area"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: (index * 0.1) + 0.2 }}
+            >
+              {content.length > 0 ? (
+                content.map((paragraph, pIndex) => (
+                  <p 
+                    key={pIndex} 
+                    className={`text-white mb-2 ${paragraph.trim().startsWith('-') ? 'pl-4' : ''}`}
+                  >
+                    {paragraph.trim().startsWith('-') ? 
+                      paragraph.substring(1).trim() : 
+                      paragraph}
+                  </p>
+                ))
+              ) : (
+                <p className="text-gray-400 italic">No information available</p>
+              )}
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  };
+
+  const extractSection = (text, sectionName) => {
+    const cleanedText = text.replace(/\*/g, "").replace(/## /g, "");
+    
+    // Try to find the section using different patterns
+    const sectionRegex = new RegExp(`${sectionName}[:\\s]([\\s\\S]*?)(?=\\n(?:Causes|Symptoms|Diagnosis|Treatment Options|Preventive Measures|Risk Factors|Additional Details)[:\\s]|$)`, 'i');
+    const match = cleanedText.match(sectionRegex);
+    
+    if (match && match[1]) {
+      return match[1]
+        .trim()
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
+    }
+    
+    return [];
   };
 
   const fetchDiseaseInfo = async (disease) => {
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const prompt = `Provide detailed information about the disease "${disease}".\n\nCauses\nSymptoms\nDiagnosis\nTreatment Options\nPreventive Measures\nRisk Factors\nAdditional Details`;
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const prompt = `Provide detailed information about the disease "${disease}" with clear section headings.\n\nPlease organize your response with these exact headings:\n- Causes\n- Symptoms\n- Diagnosis\n- Treatment Options\n- Preventive Measures\n- Risk Factors\n- Additional Details\n\nMake each section concise and informative.`;
       
       const result = await model.generateContent(prompt);
       const response = await result.response;
@@ -152,7 +164,7 @@ function GeneralPrediction() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
+    <div className="max-w-6xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
       <motion.h2 
         className="text-2xl font-bold text-center mb-6"
         initial={{ opacity: 0, y: -20 }}
@@ -181,7 +193,7 @@ function GeneralPrediction() {
             </div>
           ))}
 
-          <div className="flex flex-col space-y-2">
+<div className="flex flex-col space-y-2">
             <label className="text-gray-300 text-sm">Age</label>
             <input
               type="number"
@@ -262,7 +274,7 @@ function GeneralPrediction() {
             className="mt-8 bg-gray-800 p-6 rounded-lg space-y-4"
           >
             <p className="text-lg font-semibold text-green-500">
-             {result}
+              Prediction Result: {result}
             </p>
           </motion.div>
         )}
@@ -280,6 +292,70 @@ function GeneralPrediction() {
           </motion.div>
         )}
       </div>
+
+      <style jsx>{`
+        .grid-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          grid-gap: 1.5rem;
+          width: 100%;
+        }
+
+        .grid-item {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-item:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-area {
+          flex-grow: 1;
+          overflow-y: auto;
+          max-height: 250px;
+        }
+
+        /* Custom scrollbar for better UX */
+        .content-area::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (min-width: 768px) {
+          .grid-container {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .grid-container {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .grid-container {
+            grid-template-columns: repeat(4, 1fr);
+          }
+        }
+      `}</style>
     </div>
   );
 }

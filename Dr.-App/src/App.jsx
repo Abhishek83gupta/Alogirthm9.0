@@ -1,5 +1,3 @@
-
-
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -16,6 +14,9 @@ import Prediction from './Compoenets/prediction/Prediction'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ChatBotButton from './Compoenets/ChatBotButton'
+import LandingPage from './pages/Landing'
+import NewsComponent from './pages/News'
+import Mri from './pages/Mri'
 
 
 function App() {
@@ -28,7 +29,11 @@ function App() {
 
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/appointment" element={<Home />} />
+        <Route path="/medicine" element={<>Medicine</>} />
+        <Route path="/mri" element={<Mri/>} />
+        <Route path="/news" element={<NewsComponent/>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Appoiment/:DocId" element={<Appoiment />} />

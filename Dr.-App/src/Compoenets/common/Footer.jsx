@@ -1,57 +1,83 @@
 import React from "react";
-import logo from "../../assets/assets_frontend/logo.svg";
+import { Link } from "react-router-dom";
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { MdEmail, MdPhone } from "react-icons/md";
 
 function Footer() {
   return (
-    <footer className="bg-[#1e293b] py-10 shadow-md border-t border-gray-700">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center space-y-8 md:space-y-0 px-4 md:px-10 lg:px-20">
-        {/* Logo and Description */}
-        <div className="flex flex-col items-start md:w-1/3 space-y-4">
-          <img className="w-36 md:w-44" src={logo} alt="logo" />
-          <p className="text-sm md:text-base text-gray-300">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
-          </p>
+    <footer className="bg-[#1a2332] text-gray-300 border-t border-gray-700">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Company Info */}
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-4">Prescripto</h2>
+            <p className="text-sm text-gray-400 mb-4">
+              Making healthcare accessible and convenient for everyone.
+            </p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-[#3b82f6]">
+                <FaFacebookF size={20} />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-[#3b82f6]">
+                <FaTwitter size={20} />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-[#3b82f6]">
+                <FaInstagram size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-[#3b82f6]">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-[#3b82f6]">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services"
+                  className="text-gray-400 hover:text-[#3b82f6]"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-gray-400 hover:text-[#3b82f6]"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
+            <div className="space-y-2">
+              <p className="flex items-center text-gray-400">
+                <MdPhone className="mr-2" /> +1 234 567 8900
+              </p>
+              <p className="flex items-center text-gray-400">
+                <MdEmail className="mr-2" /> contact@prescripto.com
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Company Links */}
-        <div className="flex flex-col space-y-4 md:w-1/4">
-          <p className="font-semibold text-lg text-white">COMPANY</p>
-          <ul className="space-y-2">
-            <li className="text-gray-300 hover:text-[#3b82f6] cursor-pointer transition-colors duration-300">
-              Home
-            </li>
-            <li className="text-gray-300 hover:text-[#3b82f6] cursor-pointer transition-colors duration-300">
-              About us
-            </li>
-            <li className="text-gray-300 hover:text-[#3b82f6] cursor-pointer transition-colors duration-300">
-              Contact us
-            </li>
-            <li className="text-gray-300 hover:text-[#3b82f6] cursor-pointer transition-colors duration-300">
-              Privacy policy
-            </li>
-          </ul>
+        {/* Copyright */}
+        <div className="text-center text-gray-400 mt-8 pt-8 border-t border-gray-700">
+          <p>© {new Date().getFullYear()} Prescripto. All rights reserved.</p>
         </div>
-
-        {/* Get in Touch */}
-        <div className="flex flex-col space-y-4 md:w-1/4">
-          <p className="font-semibold text-lg text-white">GET IN TOUCH</p>
-          <ul className="space-y-2 text-gray-300">
-            <li className="text-sm md:text-base hover:text-[#3b82f6] transition-colors duration-300">
-              +1-212-456-7890
-            </li>
-            <li className="text-sm md:text-base hover:text-[#3b82f6] transition-colors duration-300">
-              greatstackdev@gmail.com
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="text-center py-4 mt-8 border-t border-gray-700">
-        <p className="text-gray-400 text-sm md:text-base">
-          Copyright © 2024 NIKHIL_MANE - All Rights Reserved.
-        </p>
       </div>
     </footer>
   );
