@@ -19,7 +19,7 @@ const ChatBotButton = () => {
         onClick={toggleChat}
       >
         <span role="img" aria-label="Chat Icon" style={{ fontSize: "1.5em" }}>
-          💬 Help
+          💬 AI Assistant
         </span>
       </button>
       {isChatOpen && <ChatWindow onClose={closeChat} />}

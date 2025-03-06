@@ -1,4 +1,4 @@
-const Heart = require('../model/heart');
+const Heart = require('../models/heart');
 
 // Create a new heart record
 const createHeartRecord = async (req, res) => {

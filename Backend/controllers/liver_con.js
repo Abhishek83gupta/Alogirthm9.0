@@ -1,4 +1,4 @@
-const Liver = require('../model/liver');
+const Liver = require('../models/liver');
 
 // Create a new liver record
 const createLiverRecord = async (req, res) => {

@@ -92,17 +92,28 @@ def predict_general():
 @app.route('/predict/qa', methods=['POST'])
 def predict():
     data = request.get_json()
-    user_question = data.get('question', '')
+    user_question = data.get('question', '').strip()  # Remove leading/trailing spaces
 
-    # Preprocess and vectorize the input question
+    if not user_question:
+        return jsonify({"answer": "Please enter a valid question."})
+
+    # Vectorize the input question
     user_question_vector = vectorizer.transform([user_question])
     similarities = cosine_similarity(user_question_vector, vectorizer.transform(questions))
-    
+
     # Find the most similar question
     most_similar_idx = np.argmax(similarities)
-    best_answer = answers[most_similar_idx]
+    max_similarity_score = similarities[0][most_similar_idx]  
 
+    # Define a threshold for valid similarity
+    SIMILARITY_THRESHOLD = 0.3  # Adjust as needed
+
+    if max_similarity_score < SIMILARITY_THRESHOLD:
+        return jsonify({"answer": "I am a healthcare chatbot. Please ask questions related to healthcare."})
+
+    best_answer = answers[most_similar_idx]
     return jsonify({'answer': best_answer})
+
 
    
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-const Diabetes = require('../model/Diabetes.js');
+const Diabetes = require('../models/Diabetes.js');
 
 
 // Create a new diabetes record

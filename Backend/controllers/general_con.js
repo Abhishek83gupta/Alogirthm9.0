@@ -1,4 +1,4 @@
-const General = require('../model/general');
+const General = require('../models/general');
 
 // Create a new patient record
 const createPatientRecord = async (req, res) => {

@@ -1,7 +1,4 @@
-
-
-
-const Cancer = require('../model/cancer');
+const Cancer = require('../models/cancer');
 
 const createCancerRecord = async (req, res) => {
 

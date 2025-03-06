@@ -5,11 +5,11 @@ const PORT = 3000;
 const connectDB = require('./dbconfig/db.js'); 
 
 
-const cancerRoutes = require('./Routes/cancer.js');
-const Diabetesroutre =require('./Routes/diabetes_rou');
-const heartrouter = require('./Routes/heart_rou');
-const liverrouter = require('./Routes/liver_rou');
-const genralrouter = require('./Routes/genreal')
+const cancerRoutes = require('./routes/cancer.js');
+const Diabetesroutre =require('./routes/diabetes_rou');
+const heartrouter = require('./routes/heart_rou');
+const liverrouter = require('./routes/liver_rou');
+const genralrouter = require('./routes/genreal')
 
 
 // Middleware
