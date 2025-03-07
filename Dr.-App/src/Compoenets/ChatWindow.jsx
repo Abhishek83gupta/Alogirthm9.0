@@ -80,7 +80,7 @@ const ChatWindow = ({ onClose }) => {
  
 
   return (
-    <div className="fixed bottom-4 right-4 w-[600px] h-[800px] bg-white rounded-xl shadow-2xl flex flex-col">
+    <div className="fixed bottom-4 right-4 w-[400px] h-[600px] bg-white rounded-xl shadow-2xl flex flex-col">
       <div className="bg-blue-600 p-4 rounded-t-xl flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 rounded-full bg-green-400"></div>
