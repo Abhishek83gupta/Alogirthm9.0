@@ -19,7 +19,7 @@ def train_diabetes_model():
     data = pd.read_csv('datasets/diabetes.csv')
     X = data.drop(columns=['Outcome'])
     y = data['Outcome']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=84)
     model = RandomForestClassifier(random_state=42)
     model.fit(X_train, y_train)
     accuracy = accuracy_score(y_test, model.predict(X_test))
@@ -77,10 +77,10 @@ def train_general_model():
     y = data['Disease']
 
     # Split data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=84)
 
     # Train the model
-    model = RandomForestClassifier(random_state=42)
+    model = RandomForestClassifier(random_state=84)
     model.fit(X_train, y_train)
 
     # Evaluate the model

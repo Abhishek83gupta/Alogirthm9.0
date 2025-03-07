@@ -17,6 +17,7 @@ import ChatBotButton from './Compoenets/ChatBotButton'
 import LandingPage from './pages/Landing'
 import NewsComponent from './pages/News'
 import Mri from './pages/Mri'
+import Medicine from './pages/Medicine'
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/appointment" element={<Home />} />
-        <Route path="/medicine" element={<>Medicine</>} />
+        <Route path="/medicine" element={<Medicine/>} />
         <Route path="/mri" element={<Mri/>} />
         <Route path="/news" element={<NewsComponent/>} />
         <Route path="/about" element={<About />} />

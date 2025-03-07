@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  
+CORS(app)    
 
 # Load pre-trained models
 diabetes_model = pickle.load(open("./models/diabetes_model.pkl", "rb"))
